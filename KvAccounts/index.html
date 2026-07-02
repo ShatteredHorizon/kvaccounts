@@ -9,18 +9,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       background: #0f0b08;
       color: #e8ddd0;
       font-family: Inter, system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,140,66,0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: -1;
+    }
     ::selection { background: rgba(255, 140, 66, 0.3); }
     .wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
 
     .hero {
       text-align: center;
-      padding: 80px 20px 40px;
+      padding: 100px 20px 50px;
     }
     .hero h1 {
       font-size: 52px;
@@ -28,182 +37,200 @@
       line-height: 1.1;
       letter-spacing: -1px;
       margin-bottom: 16px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease-out forwards;
     }
+    .hero h1 .hl {
+      display: block;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: upIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .hero h1 .hl:nth-child(1) { animation-delay: 0.05s; }
+    .hero h1 .hl:nth-child(2) { animation-delay: 0.2s; }
     .hero h1 span { color: #ff8c42; }
     .hero p {
       font-size: 16px;
       color: #a09080;
-      max-width: 480px;
+      max-width: 500px;
       margin: 0 auto 28px;
       line-height: 1.6;
       opacity: 0;
-      animation: fadeUp 0.6s ease-out 0.12s forwards;
+      transform: translateY(20px);
+      animation: upIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
     }
     .hero-btns {
       display: flex;
       gap: 12px;
       justify-content: center;
       opacity: 0;
-      animation: fadeUp 0.6s ease-out 0.24s forwards;
+      transform: translateY(20px);
+      animation: upIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
     }
 
-    @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(16px); }
+    @keyframes upIn {
+      0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    .btn-o {
+    .btn-p {
       background: #ff8c42;
       color: #ffffff;
-      padding: 12px 28px;
-      border-radius: 6px;
+      padding: 14px 34px;
+      border-radius: 8px;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 15px;
       border: none;
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
-      transition: background 0.2s, transform 0.2s;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
     }
-    .btn-o:hover { background: #ffa55c; transform: translateY(-2px); }
+    .btn-p:hover { background: #ffa55c; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,140,66,0.25); }
 
-    .btn-w {
-      background: rgba(255,255,255,0.04);
+    .btn-s {
+      background: transparent;
       color: #e8ddd0;
-      border: 1px solid rgba(255,140,66,0.15);
-      padding: 12px 28px;
-      border-radius: 6px;
+      border: 1px solid rgba(255,140,66,0.2);
+      padding: 14px 34px;
+      border-radius: 8px;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 15px;
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
       transition: background 0.2s, border-color 0.2s, transform 0.2s;
     }
-    .btn-w:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,140,66,0.25); transform: translateY(-2px); }
+    .btn-s:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,140,66,0.35); transform: translateY(-2px); }
 
     .stats {
       display: flex;
       justify-content: center;
-      gap: 48px;
-      padding: 40px 20px 60px;
+      gap: 56px;
+      padding: 30px 20px 60px;
     }
-    .stat-item { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .stat-item { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .stat-item.in { opacity: 1; transform: translateY(0); }
     .stat-item:nth-child(1).in { transition-delay: 0.05s; }
-    .stat-item:nth-child(2).in { transition-delay: 0.1s; }
-    .stat-item:nth-child(3).in { transition-delay: 0.15s; }
-    .stat-n { font-size: 28px; font-weight: 800; color: #ff8c42; }
-    .stat-l { font-size: 13px; color: #7a6a5a; margin-top: 2px; }
+    .stat-item:nth-child(2).in { transition-delay: 0.15s; }
+    .stat-item:nth-child(3).in { transition-delay: 0.25s; }
+    .stat-n { font-size: 30px; font-weight: 800; color: #ff8c42; letter-spacing: -0.5px; }
+    .stat-l { font-size: 13px; color: #7a6a5a; margin-top: 3px; letter-spacing: 0.3px; text-transform: uppercase; font-weight: 600; }
 
-    .sec-title { text-align: center; margin-bottom: 40px; }
-    .sec-title h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
-
-    /* Product */
-    .sec-prod { padding: 30px 0 50px; }
-    .prod-wrap { max-width: 460px; margin: 0 auto; }
-    .prod-card {
-      border: 1px solid rgba(255,140,66,0.12);
-      border-radius: 12px;
-      background: rgba(255,140,66,0.02);
-      padding: 32px;
-      transition: border-color 0.25s, transform 0.25s;
-    }
-    .prod-card:hover { border-color: rgba(255,140,66,0.2); transform: translateY(-3px); }
-    .prod-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-    .prod-card p { font-size: 14px; color: #a09080; line-height: 1.6; margin-bottom: 20px; }
-    .prod-bot { display: flex; align-items: center; justify-content: space-between; }
-    .prod-price { font-size: 24px; font-weight: 800; color: #ff8c42; }
-
-    /* Pay */
-    .sec-pay { padding: 30px 0 50px; }
-    .pay-card {
-      max-width: 440px;
-      margin: 0 auto;
-      border: 1px solid rgba(255,140,66,0.12);
-      border-radius: 12px;
-      background: rgba(255,140,66,0.02);
-      padding: 36px 32px;
+    .sec-title {
       text-align: center;
-      transition: border-color 0.25s, transform 0.25s;
+      margin-bottom: 36px;
     }
-    .pay-card:hover { border-color: rgba(255,140,66,0.2); transform: translateY(-3px); }
-    .pay-card h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-    .pay-card p { color: #a09080; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+    .sec-title h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+    .sec-title p { color: #8a7a6a; font-size: 15px; line-height: 1.6; }
 
-    .pay-btn {
-      background: #ff8c42;
-      color: #ffffff;
-      padding: 14px 44px;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
+    .sec-divider {
+      width: 40px;
+      height: 3px;
+      background: rgba(255,140,66,0.15);
+      border-radius: 2px;
+      margin: 0 auto 32px;
+    }
+
+    .sec-prod { padding: 50px 0 60px; }
+    .prod-wrap { max-width: 500px; margin: 0 auto; }
+    .prod-card {
+      border: 1px solid rgba(255,140,66,0.15);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255,140,66,0.03) 0%, rgba(255,140,66,0.01) 100%);
+      padding: 36px;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .prod-card:hover { border-color: rgba(255,140,66,0.25); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+    .prod-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .prod-card .tag {
       display: inline-block;
-      transition: background 0.2s, transform 0.2s;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #ff8c42;
+      background: rgba(255,140,66,0.1);
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 14px;
     }
-    .pay-btn:hover { background: #ffa55c; transform: translateY(-2px); }
+    .prod-card p { font-size: 14px; color: #a09080; line-height: 1.65; margin-bottom: 20px; }
+    .prod-card .incl { font-size: 13px; color: #a09080; line-height: 1.8; padding-left: 4px; margin-bottom: 24px; }
+    .prod-card .incl span { color: #e8ddd0; }
+    .prod-bot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,140,66,0.08);
+    }
+    .prod-price { font-size: 26px; font-weight: 800; color: #ff8c42; }
 
-    /* Features */
     .sec-feat { padding: 50px 0 60px; }
     .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
     .feat-card {
       border: 1px solid rgba(255,140,66,0.08);
       border-radius: 10px;
-      padding: 24px 20px;
-      transition: border-color 0.25s, transform 0.25s;
+      padding: 28px 22px;
+      transition: border-color 0.25s, transform 0.25s, background 0.25s;
     }
-    .feat-card:hover { border-color: rgba(255,140,66,0.2); transform: translateY(-2px); }
+    .feat-card:hover { border-color: rgba(255,140,66,0.18); background: rgba(255,140,66,0.02); transform: translateY(-3px); }
+    .feat-card .icon {
+      font-size: 22px;
+      margin-bottom: 12px;
+      display: block;
+      color: #ff8c42;
+      font-weight: 700;
+    }
     .feat-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-    .feat-card p { font-size: 13px; color: #a09080; line-height: 1.6; }
+    .feat-card p { font-size: 13px; color: #a09080; line-height: 1.65; }
 
-    /* Discord */
-    .sec-disc { text-align: center; padding: 40px 20px 60px; }
+    .sec-disc { text-align: center; padding: 40px 20px 70px; }
     .disc-card {
       display: inline-block;
       border: 1px solid rgba(255,140,66,0.12);
-      border-radius: 12px;
-      background: rgba(255,140,66,0.02);
-      padding: 40px 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255,140,66,0.03) 0%, transparent 100%);
+      padding: 44px 52px;
       max-width: 480px;
-      transition: border-color 0.25s, transform 0.25s;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
-    .disc-card:hover { border-color: rgba(255,140,66,0.2); transform: translateY(-3px); }
+    .disc-card:hover { border-color: rgba(255,140,66,0.22); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
     .disc-card h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
-    .disc-card p { color: #a09080; font-size: 14px; margin-bottom: 24px; line-height: 1.6; }
+    .disc-card p { color: #8a7a6a; font-size: 14px; margin-bottom: 24px; line-height: 1.65; }
 
     footer {
-      border-top: 1px solid rgba(255,140,66,0.08);
+      border-top: 1px solid rgba(255,140,66,0.06);
       padding: 32px 20px;
       text-align: center;
     }
-    footer p { color: #6a5a4a; font-size: 13px; }
+    footer p { color: #5a4a3a; font-size: 13px; }
 
-    /* Scroll reveal */
-    .rv { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .rv { opacity: 0; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
     .rv.in { opacity: 1; transform: translateY(0); }
     .rv-1 { transition-delay: 0.05s; }
     .rv-2 { transition-delay: 0.1s; }
     .rv-3 { transition-delay: 0.15s; }
 
     @media (max-width: 640px) {
+      .hero { padding: 70px 20px 30px; }
       .hero h1 { font-size: 32px; }
-      .stats { gap: 20px; flex-wrap: wrap; }
-      .stat-n { font-size: 22px; }
+      .stats { gap: 24px; flex-wrap: wrap; }
+      .stat-n { font-size: 24px; }
+      .prod-card { padding: 24px; }
+      .disc-card { padding: 32px 24px; }
     }
   </style>
 </head>
 <body>
   <section class="hero">
-    <h1>Premium <span>MFA Accounts</span><br>Delivered Instantly</h1>
+    <h1>
+      <span class="hl">Premium <span>MFA Accounts</span></span>
+      <span class="hl">Delivered Instantly</span>
+    </h1>
     <p>Full access Microsoft accounts with email recovery. Pre-verified on Hypixel. Instant delivery and dedicated support.</p>
     <div class="hero-btns">
-      <a href="#product" class="btn-o">View Pricing</a>
-      <a href="#discord" class="btn-w">Join Discord</a>
+      <a href="#product" class="btn-p">View Pricing</a>
+      <a href="#discord" class="btn-s">Join Discord</a>
     </div>
   </section>
 
@@ -216,32 +243,21 @@
   <section class="sec-prod" id="product">
     <div class="wrap">
       <div class="sec-title rv">
-        <h2>Normal MFA</h2>
-        <p style="color:#a09080;font-size:15px;line-height:1.6;">Full access Microsoft account with email recovery code. Clean on Hypixel, works on all servers.</p>
+        <h2>Purchase</h2>
+        <div class="sec-divider"></div>
+        <p>One product. Straightforward. No hidden fees.</p>
       </div>
       <div class="prod-wrap rv rv-1">
         <div class="prod-card">
-          <h3>Normal MFA</h3>
-          <p>Full access Microsoft Java account with email recovery. Pre-verified and unbanned on Hypixel. Instant delivery.</p>
+          <div class="tag">Available Now</div>
+          <h3>Normal MFA Account</h3>
+          <p>Full access Microsoft Java account with email recovery. Pre-verified and unbanned on Hypixel. Instant delivery after payment.</p>
+          <div class="incl"><span>Includes:</span> Email + Password + Recovery Code</div>
           <div class="prod-bot">
             <span class="prod-price">$3.50</span>
-            <a href="https://app.paymento.io/payment-link/5230bee8dade4a728ec84b3ccf9a84d5" target="_blank" class="btn-o">Purchase</a>
+            <a href="https://app.paymento.io/payment-link/5230bee8dade4a728ec84b3ccf9a84d5" target="_blank" class="btn-p">Buy Now</a>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec-pay" id="pay">
-    <div class="wrap">
-      <div class="sec-title rv">
-        <h2>Payment</h2>
-        <p style="color:#a09080;font-size:15px;line-height:1.6;">Pay securely via our payment handler.</p>
-      </div>
-      <div class="pay-card rv rv-1">
-        <h2>Normal MFA - $3.50</h2>
-        <p>Click the button below to proceed with payment.</p>
-        <a href="https://app.paymento.io/payment-link/5230bee8dade4a728ec84b3ccf9a84d5" target="_blank" class="pay-btn">Pay $3.50</a>
       </div>
     </div>
   </section>
@@ -250,19 +266,23 @@
     <div class="wrap">
       <div class="sec-title rv">
         <h2>Why KvAccounts</h2>
+        <div class="sec-divider"></div>
       </div>
       <div class="feat-grid">
         <div class="feat-card rv rv-1">
+          <span class="icon">&#10132;</span>
           <h3>Instant Delivery</h3>
-          <p>Credentials delivered to your dashboard within seconds. Fully automated system.</p>
+          <p>Credentials delivered to your dashboard within seconds of payment. Fully automated system.</p>
         </div>
         <div class="feat-card rv rv-2">
+          <span class="icon">&#10003;</span>
           <h3>Verified Accounts</h3>
-          <p>Every account is tested on Hypixel before being listed. Zero invalid products.</p>
+          <p>Every account is tested on Hypixel before being listed. Zero invalid products guaranteed.</p>
         </div>
         <div class="feat-card rv rv-3">
+          <span class="icon">&#9881;</span>
           <h3>24/7 Support</h3>
-          <p>Live support on Discord from real people. Fast responses every day.</p>
+          <p>Live support on Discord from real people. Fast responses any time of day.</p>
         </div>
       </div>
     </div>
@@ -272,7 +292,7 @@
     <div class="disc-card rv">
       <h2>Join Our Discord</h2>
       <p>Get support, stock alerts, and connect with the community.</p>
-      <a href="#" class="btn-o">Join Discord</a>
+      <a href="#" class="btn-p">Join Discord</a>
     </div>
   </section>
 
@@ -281,7 +301,6 @@
   </footer>
 
   <script>
-    // Count up
     function countUp(el, target) {
       let current = 0;
       const step = Math.ceil(target / 50);
@@ -304,7 +323,6 @@
     }, { threshold: 0.5 });
     document.querySelectorAll('.stat-item').forEach(el => countObs.observe(el));
 
-    // Scroll reveal
     const obs = new IntersectionObserver(e => {
       e.forEach(en => { if (en.isIntersecting) en.target.classList.add('in'); });
     }, { threshold: 0.15 });
